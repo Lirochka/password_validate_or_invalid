@@ -63,50 +63,32 @@ interface Validation {
             if (text.length < minLength)
                 return Result.MinLengthInsufficient(minLength)
 
-            if (upperCaseLetterCount > 0) {
-                var count = 0
-                for (ch in text) {
-                    if (ch.isUpperCase())
-                        count++
+            var upperCaseLetterCountActualCount = 0
+            var lowerCaseLetterCountActualCount = 0
+            var numberCountActualCount = 0
+            var specialSignsCountActualCount = 0
+
+            for (ch in text) {
+                when {
+                    ch.isUpperCase() -> upperCaseLetterCountActualCount++
+                    ch.isLowerCase() -> lowerCaseLetterCountActualCount++
+                    ch.isDigit() -> numberCountActualCount++
+                    else -> specialSignsCountActualCount++
                 }
-                if (count < upperCaseLetterCount)
-                    return Result.UpperCaseLetterCountInsufficient(
-                        upperCaseLetterCount
-                    )
             }
-            if (lowerCaseLetterCount > 0) {
-                var count = 0
-                for (ch in text) {
-                    if (ch.isLowerCase())
-                        count++
-                }
-                if (count < lowerCaseLetterCount)
-                    return Result.LowerCaseLetterCountInsufficient(
-                        lowerCaseLetterCount
-                    )
+            if (upperCaseLetterCount > 0 && upperCaseLetterCountActualCount < upperCaseLetterCount)
+                return Result.UpperCaseLetterCountInsufficient(upperCaseLetterCount)
+
+
+            if (lowerCaseLetterCount > 0 && lowerCaseLetterCountActualCount < lowerCaseLetterCount) {
+                return Result.LowerCaseLetterCountInsufficient(lowerCaseLetterCount)
             }
-            if (numberCount > 0) {
-                var count = 0
-                for (ch in text) {
-                    if (ch.isDigit())
-                        count++
-                }
-                if (count < numberCount)
-                    return Result.NumberCountInsufficient(
-                        numberCount
-                    )
-            }
-            if (specialSignsCount > 0) {
-                var count = 0
-                for (ch in text) {
-                    if (ch.isLetterOrDigit())
-                        count++
-                }
-                if (count == text.length)
-                    return Result.SpecialSignsCountInsufficient(
-                        specialSignsCount
-                    )
-            }
+            if (numberCount > 0 && numberCountActualCount < numberCount)
+                return Result.NumberCountInsufficient(numberCount)
+
+            if (specialSignsCount > 0 && specialSignsCountActualCount < specialSignsCount)
+                return Result.SpecialSignsCountInsufficient(specialSignsCount)
+
             return Result.Valid
         }
     }
