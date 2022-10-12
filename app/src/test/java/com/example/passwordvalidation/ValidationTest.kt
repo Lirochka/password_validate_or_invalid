@@ -29,7 +29,7 @@ class ValidationTest {
             "dj12GkJ#@Kf^"
         )
         val actualLiat: List<Validation.Result> = sourceList.map {
-            validation.isValid(it)
+            validation.isValid(text = it)
         }
         actualLiat.forEach {
             assertEquals(Validation.Result.Valid, it)
@@ -137,10 +137,10 @@ class ValidationTest {
         val validation: Validation = Validation.Password(lowerCaseLetterCount = 1)
         val sourceList = listOf(
             "i", "g", "o", "u", "f",
-            "12G", "12K3", "1T234", "12O345",
+            "1f2G", "12dK3", "1Tj234", "12Ok345",
             "asK", "asLd", "asUdf", "aOsdfg",
             "AaS", "AfSD", "ASjDF", "ASDrFG",
-            "!E@", "!U@#", "!@K#$", "!@D#$%",
+            "!Er@", "!U@u#", "!@Ku#$", "!@Du#$%",
             "As", "As3", "sA@3", "Fs1%l",
             "dj12GkJ#@Kf^"
         )
@@ -181,13 +181,13 @@ class ValidationTest {
     fun test_numberCount_valid() {
         val validation: Validation = Validation.Password(numberCount = 1)
         val sourceList = listOf(
-            "1", "2", "0", "9", "7",
-            "12G", "12K3", "1T234", "12O345",
-            "a4sK", "a5sLd", "asU5df", "aOsdfg",
-            "A7aS", "AfS4D", "AS6jDF", "ASD5rFG",
-            "!E1@", "!U4@#", "!@K2#$", "!@3D#$%",
-            "A5s", "As3", "sA@3", "Fs1%l",
-            "dj12GkJ#@Kf^"
+            "12f", "82e", "8s9", "97y", "73w",
+            "15G", "19K", "17T",
+            "a45sK", "a56sLd", "a7sU5df", "a5Osd",
+            "A76aS", "Af5S4D", "AS46jDF", "AS1D5rFG",
+            "!E11@", "!U40@#", "!@0K2#$", "!@33D#$%",
+            "A57s", "As39", "sA8@3", "Fs18%l",
+            "dj12GkJ7#@Kf^"
         )
         val actualLiat: List<Validation.Result> = sourceList.map {
             validation.isValid(it)
@@ -200,9 +200,7 @@ class ValidationTest {
     @Test
     fun test_numberCount_invalid() {
         val validation: Validation = Validation.Password(numberCount = 1)
-        val sourceList = listOf(
-            "K", "g", " ", "^"
-        )
+        val sourceList = listOf("K", "g", "^")
         val actualLiat: List<Validation.Result> = sourceList.map {
             validation.isValid(it)
         }
@@ -242,7 +240,7 @@ class ValidationTest {
     fun test_specialSignsCount_invalid() {
         val validation: Validation = Validation.Password(specialSignsCount = 1)
         val sourceList = listOf(
-            "K", "g", " ", "1"
+            "K", "g", "1"
         )
         val actualLiat: List<Validation.Result> = sourceList.map {
             validation.isValid(it)
